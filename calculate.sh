@@ -8,6 +8,7 @@ function write_data {
 function fetch_node_capacity {
   data=$(eval $CURL_CMD/api/v1/nodes/$NODE/proxy/metrics)
   TOTAL_CPU_CORES=$(echo "$data" | grep '^machine_cpu_cores' | cut -f2 -d ' ')
+  TOTAL_CPU_CORES=$(echo $[$TOTAL_CPU_CORES * 1000])
   TOTAL_MEMORY=$(echo "$data" | grep '^machine_memory_bytes' | cut -f2 -d ' ' | xargs printf "%.0f\n")
   DATA_POINT="stats,node=$NODE cpu_cores=$TOTAL_CPU_CORES,memory_bytes=$TOTAL_MEMORY"
 }
