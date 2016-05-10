@@ -6,7 +6,7 @@ function write_data {
 }
 
 function fetch_node_capacity {
-  data=$($CURL_CMD/api/v1/nodes/$NODE/proxy/metrics)
+  data=$(eval $CURL_CMD/api/v1/nodes/$NODE/proxy/metrics)
   TOTAL_CPU_CORES=$(echo "$data" | grep '^machine_cpu_cores' | cut -f2 -d ' ')
   TOTAL_MEMORY=$(echo "$data" | grep '^machine_memory_bytes' | cut -f2 -d ' ' | xargs printf "%.0f\n")
   DATA_POINT="stats,node=$NODE cpu_cores=$TOTAL_CPU_CORES,memory_bytes=$TOTAL_MEMORY"
@@ -14,7 +14,7 @@ function fetch_node_capacity {
 
 function fetch_cluster_capacity {
   BATCH_DATA=""
-  for NODE in `$CURL_CMD/api/v1/nodes | grep \"name\" | cut -f4 -d \"`; do
+  for NODE in `eval $CURL_CMD/api/v1/nodes | grep \"name\" | cut -f4 -d \"`; do
     fetch_node_capacity
 
     if [ -n "$BATCH_DATA" ]; then
