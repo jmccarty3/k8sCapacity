@@ -31,7 +31,7 @@ export BEARER_TOKEN=/var/run/secrets/kubernetes.io/serviceaccount/token
 
 if [ -f $BEARER_TOKEN ]; then
   TOKEN=$(cat $BEARER_TOKEN)
-  CURL_CMD="curl -m 30 -s --header \"Authorization: Bearer $BEARER_TOKEN\" --insecure https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT"
+  CURL_CMD="curl -m 30 -s --header \"Authorization: Bearer $TOKEN\" --insecure https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT"
 elif [ -n "$KUBERNETES_MASTER" ]; then
   CURL_CMD="curl -m 30 -s --insecure http://$KUBERNETES_MASTER"
 else
