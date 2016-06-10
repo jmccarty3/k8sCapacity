@@ -54,7 +54,7 @@ if [ -z ${INFLUXDB_ADDRESS+x} ]; then
 fi
 
 db=${INFLUXDB:-k8s_data}
-curl -s -G http://$INFLUXDB_ADDRESS/query --data-urlencode "q=CREATE DATABASE IF NOT EXISTS $db"
+curl -s  http://$INFLUXDB_ADDRESS/query --data-urlencode "q=CREATE DATABASE $db"
 
 while true;
 do
